@@ -1,0 +1,2 @@
+- [ ] Add https://dictionaryapi.dev/
+- [ ] https://www3.nd.edu/~busiforc/handouts/cryptography/Letter%20Frequencies.html#trigrams
