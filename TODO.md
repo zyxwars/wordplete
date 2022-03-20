@@ -1,2 +1,6 @@
-- [ ] Add https://dictionaryapi.dev/
-- [ ] https://www3.nd.edu/~busiforc/handouts/cryptography/Letter%20Frequencies.html#trigrams
+- [x] Add https://dictionaryapi.dev/
+- [ ] Add incorrect word response
+- [ ] Add correct word response
+- [ ] Add score
+- [ ] Highlight bigram in word
+- [ ] Show word definitions, when submitted, when hovered used words
