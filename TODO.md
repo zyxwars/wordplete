@@ -1,6 +1,8 @@
 - [x] Add https://dictionaryapi.dev/
 - [ ] Add incorrect word response
 - [ ] Add correct word response
-- [ ] Add score
+- [x] Add score
 - [ ] Highlight bigram in word
 - [ ] Show word definitions, when submitted, when hovered used words
+- [x] Start timer when first letter is typed
+- [x] Add skip option with time penalty

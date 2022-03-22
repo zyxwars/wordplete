@@ -12,20 +12,25 @@
   let usedLetters: Set<string> = new Set();
   let usedWords = [];
   let score = 0;
+  let isPaused = true;
+  let speed = 4;
 
   const answerTime = 100;
   let answerTimer = tweened(answerTime, { duration: 1000 });
   setInterval(() => {
+    if (isPaused) return;
+
     if ($answerTimer < 0) {
       $answerTimer = answerTime;
       pickNew();
       score = 0;
       usedWords = [];
       usedLetters = new Set();
+      isPaused = true;
       return;
     }
 
-    $answerTimer -= 9;
+    $answerTimer -= speed;
   }, 1000);
 
   let currentNgram = null;
@@ -75,20 +80,37 @@
     // getWordDefinition();
     pickNew();
   };
+
+  const skipNgram = () => {
+    $answerTimer = $answerTimer / 2;
+    pickNew();
+  };
 </script>
 
 <Timer percentage={$answerTimer} />
 <Letters {usedLetters} />
 <UsedWords {usedWords} />
+
+<div class="difficulty">
+  <div>Set speed:</div>
+  <input bind:value={speed} type="number" min="0" />
+</div>
+
 <main>
   <div class="score">{score}</div>
   <div class="ngram">{currentNgram[0]}</div>
   <input
     bind:value={currentWord}
+    on:input={() => {
+      if (isPaused) isPaused = false;
+    }}
     on:change={() => submitWord()}
     class="input"
     spellcheck="false"
   />
+  <div class="controls">
+    <span on:click={() => skipNgram()} class="material-icons"> refresh </span>
+  </div>
 </main>
 
 <style>
@@ -101,6 +123,16 @@
     align-items: center;
     flex-direction: column;
 
+    background-color: rgb(243, 243, 243);
+  }
+  .difficulty {
+    position: fixed;
+    bottom: 3rem;
+    right: 2rem;
+    font-family: "Fira Code", monospace;
+  }
+
+  .difficulty input {
     background-color: rgb(243, 243, 243);
   }
 
@@ -116,7 +148,19 @@
     width: 20rem;
     height: 3rem;
     font-size: 1.5rem;
-    margin-bottom: 10rem;
+    margin-bottom: 2rem;
     z-index: 1000;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4rem;
+  }
+
+  .controls span {
+    cursor: pointer;
+    font-size: 2rem;
   }
 </style>
