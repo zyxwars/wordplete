@@ -12,9 +12,9 @@
 
 <style>
   .used-words {
-    position: absolute;
+    position: fixed;
     top: 2rem;
-    right: 1rem;
+    left: 1rem;
     display: flex;
     flex-direction: column;
     width: auto;
