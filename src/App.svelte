@@ -1,7 +1,9 @@
 <script lang="ts">
   import axios from "axios";
-  import Letters from "./Letters.svelte";
-  import UsedWords from "./UsedWords.svelte";
+  import { tweened } from "svelte/motion";
+  import Letters from "./components/Letters.svelte";
+  import UsedWords from "./components/UsedWords.svelte";
+  import Timer from "./components/Timer.svelte";
   import { words, bigrams, trigrams } from "./words";
 
   const filteredBigrams = bigrams.filter((bigram) => bigram[1] > 1000);
@@ -10,6 +12,21 @@
   let usedLetters: Set<string> = new Set();
   let usedWords = [];
   let score = 0;
+
+  const answerTime = 100;
+  let answerTimer = tweened(answerTime, { duration: 1000 });
+  setInterval(() => {
+    if ($answerTimer < 0) {
+      $answerTimer = answerTime;
+      pickNew();
+      score = 0;
+      usedWords = [];
+      usedLetters = new Set();
+      return;
+    }
+
+    $answerTimer -= 9;
+  }, 1000);
 
   let currentNgram = null;
   let currentWord = "";
@@ -48,14 +65,19 @@
     ) {
       return;
     }
+
     usedLetters = new Set([...usedLetters, ...currentWord]);
     usedWords = [currentWord, ...usedWords];
-    score += calculateScore(currentWord);
-    getWordDefinition();
+    const addedScore = calculateScore(currentWord);
+    score += addedScore;
+    $answerTimer = Math.max(100, $answerTimer + addedScore);
+
+    // getWordDefinition();
     pickNew();
   };
 </script>
 
+<Timer percentage={$answerTimer} />
 <Letters {usedLetters} />
 <UsedWords {usedWords} />
 <main>
