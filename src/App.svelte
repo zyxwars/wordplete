@@ -5,6 +5,8 @@
   import UsedWords from "./components/UsedWords.svelte";
   import Timer from "./components/Timer.svelte";
   import { words, bigrams, trigrams } from "./words";
+  import Game from "./modals/Game.svelte";
+  import Modal from "./components/Modal.svelte";
 
   const filteredBigrams = bigrams.filter((bigram) => bigram[1] > 1000);
   const filteredTrigrams = trigrams.filter((trigram) => trigram[1] > 1000);
@@ -80,87 +82,14 @@
     // getWordDefinition();
     pickNew();
   };
-
-  const skipNgram = () => {
-    $answerTimer = $answerTimer / 2;
-    pickNew();
-  };
 </script>
 
-<Timer percentage={$answerTimer} />
-<Letters {usedLetters} />
-<UsedWords {usedWords} />
+<Modal>
+  <h1>hello</h1>
+</Modal>
 
-<div class="difficulty">
-  <div>Set speed:</div>
-  <input bind:value={speed} type="number" min="0" />
-</div>
-
-<main>
-  <div class="score">{score}</div>
-  <div class="ngram">{currentNgram[0]}</div>
-  <input
-    bind:value={currentWord}
-    on:input={() => {
-      if (isPaused) isPaused = false;
-    }}
-    on:change={() => submitWord()}
-    class="input"
-    spellcheck="false"
-  />
-  <div class="controls">
-    <span on:click={() => skipNgram()} class="material-icons"> refresh </span>
-  </div>
-</main>
-
-<style>
-  main {
-    width: 100%;
-    height: 100vh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    background-color: rgb(243, 243, 243);
-  }
-  .difficulty {
-    position: fixed;
-    bottom: 3rem;
-    right: 2rem;
-    font-family: "Fira Code", monospace;
-  }
-
-  .difficulty input {
-    background-color: rgb(243, 243, 243);
-  }
-
-  .score {
-    font-size: 6rem;
-    margin-bottom: 3rem;
-  }
-  .ngram {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-  .input {
-    width: 20rem;
-    height: 3rem;
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-    z-index: 1000;
-  }
-
-  .controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 4rem;
-  }
-
-  .controls span {
-    cursor: pointer;
-    font-size: 2rem;
-  }
+<style lang="postcss" global>
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
 </style>

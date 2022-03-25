@@ -2,3 +2,4 @@
 - [ ] Add correct word response
 - [ ] Highlight bigram in word
 - [ ] Show word definitions, when submitted, when hovered used words
+- [ ] Add settings
