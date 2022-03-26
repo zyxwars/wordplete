@@ -2,8 +2,6 @@
   import axios from "axios";
   import { tweened } from "svelte/motion";
   import Letters from "./components/Letters.svelte";
-  import UsedWords from "./components/UsedWords.svelte";
-  import Timer from "./components/Timer.svelte";
   import { words, bigrams, trigrams } from "./words";
   import Game from "./modals/Game.svelte";
   import Modal from "./components/Modal.svelte";

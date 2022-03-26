@@ -2,7 +2,10 @@
 - [ ] Add modals
 - settings, finish screen
 - [ ] Add game modes
+- [ ] Add animation when adding used words
+- [ ] Grid vertical spacing tailwind
 
+- [ ] Add darkmode and light mode
 - [ ] Add incorrect word response
 - [ ] Add correct word response
 - [ ] Highlight bigram in word
