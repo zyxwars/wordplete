@@ -7,10 +7,13 @@
   const filteredTrigrams = trigrams.filter((trigram) => trigram[1] > 1000);
   const ngrams = [...filteredBigrams, ...filteredTrigrams];
 
+  let isPaused = true;
   let currentNgram = null;
   let currentWord = "";
   let usedLetters: Set<string> = new Set();
   let usedWords = [];
+  let startTime = new Date().getTime();
+  let time = 0;
 
   const pickNewNgram = () => {
     currentNgram = ngrams[Math.floor(Math.random() * ngrams.length)][0];
@@ -38,9 +41,15 @@
     pickNewNgram();
   };
 
+  setInterval(() => {
+    time = Math.floor((new Date().getTime() - startTime) / 1000);
+  }, 1000);
+
   const initRound = () => {
+    isPaused = false;
     usedLetters = new Set();
     usedWords = [];
+    startTime = new Date().getTime();
 
     pickNewNgram();
   };
@@ -53,17 +62,20 @@
   <Letters {usedLetters} />
 </div>
 
-<main
-  class="w-full h-full flex justify-center items-center flex-col bg-violet-50"
->
-  <div class="text-4xl mb-6">{currentNgram}</div>
-  <input
-    class="w-1/2 sm:w-80 h-12 mb-8 px-4 text-lg bg-white border-violet-300 outline-violet-300"
-    spellcheck="false"
-    on:change={submitWord}
-    bind:value={currentWord}
-  />
-</main>
+<div class="min-h-screen flex items-center justify-center bg-violet-50">
+  <main class="grid grid-cols-3 grid-rows-3 ">
+    <div class="text-8xl col-start-2 place-self-center">{time}</div>
+    <div class="text-4xl mb-6 row-start-2 col-start-2 place-self-center">
+      {currentNgram}
+    </div>
+    <input
+      class="w-9/10 sm:w-80 h-12 mb-8 px-4 text-lg bg-white border-violet-300 outline-violet-300 row-start-3 col-start-2 place-self-center"
+      spellcheck="false"
+      on:change={submitWord}
+      bind:value={currentWord}
+    />
+  </main>
+</div>
 
 <style>
 </style>

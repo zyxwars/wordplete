@@ -1,5 +1,11 @@
+- [ ] Add proper animation
+- [ ] Add modals
+- settings, finish screen
+- [ ] Add game modes
+
 - [ ] Add incorrect word response
 - [ ] Add correct word response
 - [ ] Highlight bigram in word
 - [ ] Show word definitions, when submitted, when hovered used words
 - [ ] Add settings
+- [ ] Add more words, but keep ngrams from the smaller one

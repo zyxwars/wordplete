@@ -7,6 +7,7 @@
   import { words, bigrams, trigrams } from "./words";
   import Game from "./modals/Game.svelte";
   import Modal from "./components/Modal.svelte";
+  import Tutorial from "./modals/Tutorial.svelte";
 
   // const filteredBigrams = bigrams.filter((bigram) => bigram[1] > 1000);
   // const filteredTrigrams = trigrams.filter((trigram) => trigram[1] > 1000);
@@ -64,6 +65,7 @@
 </script>
 
 <Game />
+<Tutorial />
 
 <style lang="postcss" global>
   @tailwind base;
