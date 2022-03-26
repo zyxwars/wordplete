@@ -1,11 +1,14 @@
 <script lang="ts">
   export let className;
+  export let width;
 </script>
 
-<div class="gradient {className}" />
+<div class="gradient {className}" style="--width: {width}" />
 
 <style>
   .gradient {
+    width: var(--width);
+
     background: rgb(67, 255, 155);
     background: linear-gradient(
       -90deg,
