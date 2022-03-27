@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let usedLetters: Set<string>;
+  export let usedLetters: any;
 
   const alphabet = [..."abcdefghijklmnopqrstuvwxyz"];
 </script>
@@ -17,9 +17,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     z-index: 10;
+    color: white;
   }
   .used-letter {
-    color: rgb(255, 255, 255);
+    color: #333;
   }
 </style>

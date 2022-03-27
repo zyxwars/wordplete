@@ -18,7 +18,7 @@
   let roundTime = 0;
   let speed = 4;
   let maxAnswerTime = 100;
-  let answerTimer = tweened(maxAnswerTime, { duration: 1000 });
+  let answerTimer = maxAnswerTime;
 
   const pickNewNgram = () => {
     currentNgram = ngrams[Math.floor(Math.random() * ngrams.length)][0];
@@ -28,7 +28,7 @@
   const calculateScore = (word: string) => {
     const uniqueLetters = new Set([...word]);
 
-    return Math.floor(word.length * 0.5) + uniqueLetters.size * 2;
+    return word.length + uniqueLetters.size * 2;
   };
 
   const submitWord = () => {
@@ -45,19 +45,18 @@
     usedLetters = new Set([...usedLetters, ...currentWord]);
     usedWords = [currentWord, ...usedWords];
     const addedScore = calculateScore(currentWord);
-    console.log(addedScore);
     // score += addedScore;
-    $answerTimer = Math.min(maxAnswerTime, $answerTimer + addedScore * 3);
+    answerTimer = Math.min(maxAnswerTime, answerTimer + addedScore);
 
     // getWordDefinition();
     pickNewNgram();
   };
 
   setInterval(() => {
-    if ($answerTimer <= 0) return console.log("round ended");
+    if (answerTimer <= 0) return console.log("round ended");
 
     roundTime = Math.floor((new Date().getTime() - roundStartTime) / 1000);
-    $answerTimer = $answerTimer - speed;
+    answerTimer = answerTimer - speed;
   }, 1000);
 
   const initRound = () => {
@@ -65,7 +64,7 @@
     usedLetters = new Set();
     usedWords = [];
     roundStartTime = new Date().getTime();
-    $answerTimer = maxAnswerTime;
+    answerTimer = maxAnswerTime;
 
     pickNewNgram();
   };
@@ -76,7 +75,7 @@
 <div class="fixed top-0 left-0 w-full flex px-2 h-8">
   <Gradient
     className="h-full absolute top-0 left-0"
-    width={($answerTimer / maxAnswerTime) * 100 + "%"}
+    width={(answerTimer / maxAnswerTime) * 100 + "%"}
   />
   <Letters {usedLetters} />
 </div>

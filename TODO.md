@@ -1,14 +1,22 @@
-- [ ] Add proper animation
-- [ ] Add modals
-- settings, finish screen
-- [ ] Add game modes
-- [ ] Add animation when adding used words
+# Current:
+
 - [ ] Grid vertical spacing tailwind
+- [ ] Add settings
+
+# Bugs:
+
+- [ ] Fix tween messing up the timer
+
+# Planned:
 
 - [ ] Add darkmode and light mode
 - [ ] Add incorrect word response
 - [ ] Add correct word response
+- [ ] Modes
+  - High score
+  - Use whole alphabet
+    - timer
+    - least amount of words
 - [ ] Highlight bigram in word
 - [ ] Show word definitions, when submitted, when hovered used words
-- [ ] Add settings
 - [ ] Add more words, but keep ngrams from the smaller one
