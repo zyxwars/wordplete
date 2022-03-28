@@ -3,8 +3,9 @@
 - [ ] Grid vertical spacing tailwind
 - [ ] Add settings
 
-# Bugs:
+# Bugs/Back burner:
 
+- [ ] Add ui state type
 - [ ] Fix tween messing up the timer
 
 # Planned:
