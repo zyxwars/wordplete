@@ -1,6 +1,7 @@
 # Current:
 
 - [ ] Grid vertical spacing tailwind
+- mobile mode, change ngram offset from input
 - [ ] Add settings
 
 # Bugs/Back burner:

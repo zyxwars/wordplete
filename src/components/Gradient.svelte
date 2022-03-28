@@ -16,5 +16,6 @@
       rgba(1, 231, 201, 1) 35%,
       rgba(149, 237, 255, 1) 100%
     );
+    box-shadow: 0 0rem 0.2rem 0.4rem rgb(12, 12, 12);
   }
 </style>

@@ -8,12 +8,12 @@
   import { Alphabet } from "./game";
 
   const game = new Alphabet();
-
   game.startRound();
 
   let ui: T.Ui = null;
   game.ui.subscribe((u) => {
     ui = u;
+    game.afterSubmit(u);
   });
 </script>
 

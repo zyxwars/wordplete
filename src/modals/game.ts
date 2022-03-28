@@ -8,14 +8,15 @@ class GameMode {
   protected ngrams = [...this.filteredBigrams, ...this.filteredTrigrams];
 
   protected isPaused = true;
-  public ui: any = writable({
+  protected baseState = {
     currentNgram: null,
     currentWord: "",
     usedLetters: new Set(),
     usedWords: [],
     score: 0,
     gradientPercentage: 100,
-  });
+  };
+  public ui: any = writable(this.baseState);
   // Settings for the specific game mode
   protected settings = {};
 
@@ -24,16 +25,10 @@ class GameMode {
   }
 
   reset() {
-    const currentNgram = this.pickNewNgram();
-    this.ui.update((ui) => ({
-      ...ui,
-      currentNgram,
-      currentWord: "",
-      score: 0,
-      usedLetters: new Set(),
-      usedWords: [],
-      gradientPercentage: 100,
-    }));
+    this.ui.set({
+      ...this.baseState,
+      currentNgram: this.pickNewNgram(),
+    });
   }
 
   update() {
@@ -49,6 +44,8 @@ class GameMode {
     this.isPaused = false;
     this.update();
   }
+
+  afterSubmit(ui) {}
 
   submitWord() {
     this.ui.update((ui) => {
@@ -76,6 +73,11 @@ class GameMode {
 export class Alphabet extends GameMode {
   roundStartTime = new Date().getTime();
 
+  checkWinningCondition(usedLetters: Set<string>) {
+    if (usedLetters.size == 26) return true;
+    return false;
+  }
+
   update(): void {
     super.update();
 
@@ -84,6 +86,12 @@ export class Alphabet extends GameMode {
       score: Math.floor((new Date().getTime() - this.roundStartTime) / 1000),
     }));
   }
+
+  afterSubmit(ui) {
+    console.log(this.checkWinningCondition(ui.usedLetters));
+  }
 }
 
 class AlphabetLeastWords extends GameMode {}
+
+
