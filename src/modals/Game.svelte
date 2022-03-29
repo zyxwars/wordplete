@@ -5,15 +5,14 @@
   import Letters from "../components/Letters.svelte";
   import { words, bigrams, trigrams } from "../words";
   import { tweened } from "svelte/motion";
-  import { Alphabet } from "./game";
+  import { Alphabet, AlphabetLeastWords } from "./game";
 
-  const game = new Alphabet();
+  const game = new AlphabetLeastWords();
   game.startRound();
 
   let ui: T.Ui = null;
   game.ui.subscribe((u) => {
     ui = u;
-    game.afterSubmit(u);
   });
 </script>
 

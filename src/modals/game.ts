@@ -48,6 +48,8 @@ class GameMode {
   afterSubmit(ui) {}
 
   submitWord() {
+    let newState = null;
+
     this.ui.update((ui) => {
       const currentWord = ui.currentWord.toLowerCase();
 
@@ -59,19 +61,22 @@ class GameMode {
         return ui;
       }
 
-      return {
+      newState = {
         ...ui,
         currentNgram: this.pickNewNgram(),
         currentWord: "",
         usedLetters: new Set([...ui.usedLetters, ...currentWord]),
         usedWords: [currentWord, ...ui.usedWords],
       };
+
+      return newState;
     });
+
+    this.afterSubmit(newState);
   }
 }
-
 export class Alphabet extends GameMode {
-  roundStartTime = new Date().getTime();
+  private roundStartTime = new Date().getTime();
 
   checkWinningCondition(usedLetters: Set<string>) {
     if (usedLetters.size == 26) return true;
@@ -92,6 +97,14 @@ export class Alphabet extends GameMode {
   }
 }
 
-class AlphabetLeastWords extends GameMode {}
+export class AlphabetLeastWords extends GameMode {
+  afterSubmit(newState): void {
+    // The state wasn't updated, validation didn't pass
+    if (!newState) return;
 
-
+    this.ui.update((ui) => ({
+      ...ui,
+      score: ui.score + 1,
+    }));
+  }
+}
