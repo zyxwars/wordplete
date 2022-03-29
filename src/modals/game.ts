@@ -45,12 +45,14 @@ class GameMode {
     this.update();
   }
 
-  afterSubmit(ui) {}
+  afterSubmit(newState, oldState) {}
 
   submitWord() {
     let newState = null;
+    let oldState = null;
 
     this.ui.update((ui) => {
+      oldState = ui;
       const currentWord = ui.currentWord.toLowerCase();
 
       if (
@@ -72,7 +74,10 @@ class GameMode {
       return newState;
     });
 
-    this.afterSubmit(newState);
+    // The state wasn't updated, validation didn't pass
+    if (!newState) return;
+
+    this.afterSubmit(newState, oldState);
   }
 }
 export class Alphabet extends GameMode {
@@ -92,19 +97,48 @@ export class Alphabet extends GameMode {
     }));
   }
 
-  afterSubmit(ui) {
-    console.log(this.checkWinningCondition(ui.usedLetters));
+  afterSubmit(newState, _) {
+    console.log(this.checkWinningCondition(newState.usedLetters));
   }
 }
 
 export class AlphabetLeastWords extends GameMode {
-  afterSubmit(newState): void {
-    // The state wasn't updated, validation didn't pass
-    if (!newState) return;
-
+  afterSubmit(newState, _): void {
     this.ui.update((ui) => ({
       ...ui,
       score: ui.score + 1,
     }));
+  }
+}
+
+export class HighScore extends GameMode {
+  protected readonly answerTime = 30;
+  protected answerTimer = 0;
+
+  reset() {
+    super.reset();
+
+    this.answerTimer = this.answerTime;
+  }
+
+  update(): void {
+    super.update();
+
+    if (this.answerTimer < 1) return this.reset();
+
+    this.answerTimer -= 2;
+    this.ui.update((ui) => ({
+      ...ui,
+      gradientPercentage: Math.floor(
+        (this.answerTimer / this.answerTime) * 100
+      ),
+    }));
+  }
+
+  afterSubmit(newState: any, oldState: any): void {
+    // TODO: add better score calculation
+    const score = oldState.currentWord.length * 2;
+
+    this.answerTimer = Math.min(score + this.answerTimer, this.answerTime);
   }
 }

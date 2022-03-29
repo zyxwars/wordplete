@@ -5,21 +5,23 @@
   import Letters from "../components/Letters.svelte";
   import { words, bigrams, trigrams } from "../words";
   import { tweened } from "svelte/motion";
-  import { Alphabet, AlphabetLeastWords } from "./game";
+  import { Alphabet, AlphabetLeastWords, HighScore } from "./game";
 
-  const game = new AlphabetLeastWords();
+  const game = new HighScore();
   game.startRound();
 
+  let tweenedGradient = tweened(0, { duration: 1000 });
   let ui: T.Ui = null;
   game.ui.subscribe((u) => {
     ui = u;
+    $tweenedGradient = ui.gradientPercentage;
   });
 </script>
 
 <div class="fixed top-0 left-0 w-full flex px-2 h-8">
   <Gradient
     className="h-full absolute top-0 left-0"
-    width={ui.gradientPercentage + "%"}
+    width={$tweenedGradient + "%"}
   />
   <Letters usedLetters={ui.usedLetters} />
 </div>
