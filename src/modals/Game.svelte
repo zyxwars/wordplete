@@ -10,9 +10,10 @@
   const game = new HighScore();
   game.startRound();
 
-  let tweenedGradient = tweened(0, { duration: 1000 });
+  let tweenedGradient = tweened(100, { duration: 1000 });
   let ui: T.Ui = null;
   game.ui.subscribe((u) => {
+    console.log(ui);
     ui = u;
     $tweenedGradient = ui.gradientPercentage;
   });

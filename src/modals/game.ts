@@ -140,5 +140,6 @@ export class HighScore extends GameMode {
     const score = oldState.currentWord.length * 2;
 
     this.answerTimer = Math.min(score + this.answerTimer, this.answerTime);
+    this.ui.update((ui) => ({ ...ui, score: ui.score + score }));
   }
 }
