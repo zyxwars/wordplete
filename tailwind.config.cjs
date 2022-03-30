@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        tall: { raw: "(min-height: 400px)" },
+        tall: { raw: "(min-height: 500px)" },
       },
     },
   },

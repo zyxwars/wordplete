@@ -7,7 +7,9 @@
 # Bugs/Back burner:
 
 - [ ] Add ui state type
-- [ ] Fix tween messing up the timer
+- [x] Fix tween messing up the timer
+- [ ] Player can start typing before ui timer is reset
+- [ ] Timer slows down on first wrong submit
 
 # Planned:
 

@@ -7,7 +7,7 @@ class GameMode {
   protected filteredTrigrams = trigrams.filter((trigram) => trigram[1] > 1000);
   protected ngrams = [...this.filteredBigrams, ...this.filteredTrigrams];
 
-  protected isPaused = true;
+  public isStopped = true;
   protected baseState = {
     currentNgram: null,
     currentWord: "",
@@ -20,6 +20,8 @@ class GameMode {
   // Settings for the specific game mode
   protected settings = {};
 
+  protected updateTimeout = null;
+
   pickNewNgram() {
     return this.ngrams[Math.floor(Math.random() * this.ngrams.length)][0];
   }
@@ -29,19 +31,21 @@ class GameMode {
       ...this.baseState,
       currentNgram: this.pickNewNgram(),
     });
+    this.isStopped = true;
+    clearTimeout(this.updateTimeout);
   }
 
   update() {
     const self = this;
-    setTimeout(() => {
+    this.updateTimeout = setTimeout(() => {
       self.update();
     }, 1000);
   }
 
   startRound() {
-    this.reset();
+    if (!this.isStopped) return;
 
-    this.isPaused = false;
+    this.isStopped = false;
     this.update();
   }
 
@@ -112,7 +116,7 @@ export class AlphabetLeastWords extends GameMode {
 }
 
 export class HighScore extends GameMode {
-  protected readonly answerTime = 30;
+  protected readonly answerTime = 10;
   protected answerTimer = 0;
 
   reset() {
