@@ -48,7 +48,12 @@
     <input
       class="row-start-2 tall:row-start-4 col-start-2 place-self-center  w-11/12  sm:w-80 h-12  px-4  text-lg  text-white bg-zinc-800 border-1 border-violet-500 outline-none"
       spellcheck="false"
-      on:change={() => game.submitWord()}
+      on:change={() => {
+        // This is a pretty ugly hack, but it works for now
+        // Reason: skipping word causes blur on input which triggers onchange,
+        // reseting the word in the skip function happens after the submit is called so the timeout offsets it
+        setTimeout(() => game.submitWord(), 150);
+      }}
       bind:value={ui.currentWord}
       on:input={() => {
         game.startRound();
@@ -57,9 +62,16 @@
     <div
       class="row-start-3 col-start-2 tall:row-start-5 flex justify-evenly items-center mt-4 tall:mt-0"
     >
-      <span class="material-icons"> arrow_forward_ios </span>
-      <span class="material-icons"> refresh </span>
-      <span class="material-icons"> settings </span>
+      <span
+        class="material-icons cursor-pointer"
+        on:click={() => game.skipNgram()}
+      >
+        arrow_forward_ios
+      </span>
+      <span class="material-icons cursor-pointer" on:click={() => game.reset()}>
+        refresh
+      </span>
+      <span class="material-icons cursor-pointer"> settings </span>
     </div>
   </main>
 </div>

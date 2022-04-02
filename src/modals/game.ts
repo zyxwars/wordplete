@@ -1,3 +1,4 @@
+import { time_ranges_to_array } from "svelte/internal";
 import { writable } from "svelte/store";
 import type * as T from "../types";
 import { words, bigrams, trigrams } from "../words";
@@ -46,16 +47,29 @@ class GameMode {
     if (!this.isStopped) return;
 
     this.isStopped = false;
+    this.onStart();
     this.update();
   }
 
-  afterSubmit(newState, oldState) {}
+  skipNgram() {
+    if (this.isStopped) return;
+
+    this.ui.update((ui) => {
+      return { ...ui, currentNgram: this.pickNewNgram() };
+    });
+  }
+
+  onStart() {}
+
+  onSubmit(newState, oldState) {}
 
   submitWord() {
     let newState = null;
     let oldState = null;
 
     this.ui.update((ui) => {
+      console.log(ui);
+
       oldState = ui;
       const currentWord = ui.currentWord.toLowerCase();
 
@@ -81,7 +95,7 @@ class GameMode {
     // The state wasn't updated, validation didn't pass
     if (!newState) return;
 
-    this.afterSubmit(newState, oldState);
+    this.onSubmit(newState, oldState);
   }
 }
 export class Alphabet extends GameMode {
@@ -101,13 +115,32 @@ export class Alphabet extends GameMode {
     }));
   }
 
-  afterSubmit(newState, _) {
+  skipNgram() {
+    if (this.isStopped) return;
+
+    this.ui.update((ui) => {
+      console.log("change currentWord to none");
+      this.roundStartTime = this.roundStartTime - 5000;
+      return {
+        ...ui,
+        currentWord: "",
+        currentNgram: this.pickNewNgram(),
+        score: Math.floor((new Date().getTime() - this.roundStartTime) / 1000),
+      };
+    });
+  }
+
+  onStart(): void {
+    this.roundStartTime = new Date().getTime();
+  }
+
+  onSubmit(newState, _) {
     console.log(this.checkWinningCondition(newState.usedLetters));
   }
 }
 
 export class AlphabetLeastWords extends GameMode {
-  afterSubmit(newState, _): void {
+  onSubmit(newState, _): void {
     this.ui.update((ui) => ({
       ...ui,
       score: ui.score + 1,
@@ -139,7 +172,7 @@ export class HighScore extends GameMode {
     }));
   }
 
-  afterSubmit(newState: any, oldState: any): void {
+  onSubmit(newState: any, oldState: any): void {
     // TODO: add better score calculation
     const score = oldState.currentWord.length * 2;
 

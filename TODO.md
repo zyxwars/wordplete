@@ -1,8 +1,9 @@
 # Current:
 
-- [ ] Grid vertical spacing tailwind
-- mobile mode, change ngram offset from input
+- [x] Skip word with penalty
+- skipping word causes blur on input which triggers onchange
 - [ ] Add settings
+- [ ] Add hint when hovering over icons
 
 # Bugs/Back burner:
 
@@ -10,13 +11,16 @@
 - [x] Fix tween messing up the timer
 - [ ] Player can start typing before ui timer is reset
 - [ ] Timer slows down on first wrong submit
+- [ ] Grid vertical spacing tailwind
 
 # Planned:
+
+- [ ] Add tutorial
 
 - [ ] Add darkmode and light mode
 - [ ] Add incorrect word response
 - [ ] Add correct word response
-- [ ] Modes
+- [x] Modes
   - High score
   - Use whole alphabet
     - timer
