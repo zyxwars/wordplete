@@ -1,13 +1,13 @@
 # Current:
 
 - [x] Skip word with penalty
-- skipping word causes blur on input which triggers onchange
 - [ ] Add settings
 - [ ] Add incorrect word response
-- [ ] Flash definition after submit
+- [x] Flash definition after submit
 
 # Bugs/Back burner:
 
+- [ ] Skipping word causes blur on input which triggers onchange
 - [ ] Add ui state type
 - [ ] Player can start typing before ui timer is reset
 - [ ] Timer slows down on first wrong submit
@@ -27,5 +27,5 @@
     - timer
     - least amount of words
 - [ ] Highlight bigram in word
-- [ ] Show word definitions, when submitted, when hovered used words
+- [x] Show word definitions, when submitted
 - [ ] Use larger word list, but increase the common threshold from 1000

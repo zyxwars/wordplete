@@ -33,6 +33,14 @@
   {/each}
 </div>
 
+<div class="fixed bottom-0 left-0 right-0 bg-violet-500 px-3 py-2 truncate">
+  {#if ui.wordMeanings}
+    {#each ui.wordMeanings as meaning}
+      {meaning?.definitions?.[0]?.definition}
+    {/each}
+  {/if}
+</div>
+
 <div class="min-h-screen flex items-center justify-center bg-zinc-900">
   <main class="grid grid-cols-3 grid-rows-2 tall:grid-rows-5">
     <div

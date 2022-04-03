@@ -1,3 +1,4 @@
+import axios from "axios";
 import { time_ranges_to_array } from "svelte/internal";
 import { writable } from "svelte/store";
 import type * as T from "../types";
@@ -16,12 +17,14 @@ class GameMode {
     usedWords: [],
     score: 0,
     gradientPercentage: 100,
+    wordMeanings: null,
   };
   public ui: any = writable(this.baseState);
   // Settings for the specific game mode
   protected settings = {};
 
   protected updateTimeout = null;
+  protected definitionTimeout = null;
 
   pickNewNgram() {
     return this.ngrams[Math.floor(Math.random() * this.ngrams.length)][0];
@@ -63,6 +66,15 @@ class GameMode {
 
   onSubmit(newState, oldState) {}
 
+  getMeanings(word) {
+    axios
+      .get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+      .then((res) => {
+        console.log(res.data[0].meanings);
+        this.ui.update((ui) => ({ ...ui, wordMeanings: res.data[0].meanings }));
+      });
+  }
+
   submitWord() {
     let newState = null;
     let oldState = null;
@@ -80,6 +92,8 @@ class GameMode {
       ) {
         return ui;
       }
+
+      this.getMeanings(ui.currentWord);
 
       newState = {
         ...ui,

@@ -7,4 +7,5 @@ export interface Ui {
   score: number;
   // Can be static or used for timer by changing the value
   gradientPercentage: number;
+  wordMeanings: any;
 }
