@@ -1,6 +1,6 @@
 # Current:
 
-- [ ] Add settings
+- [x] Add settings
 - [ ] Add incorrect word response
 - [x] Add mode changer
 
@@ -17,6 +17,7 @@
 
 # Planned:
 
+- [ ] Add multiple options
 - [ ] Add hint when hovering over icons
 - [x] Add skip and reset shortcuts
 - [ ] Add tutorial

@@ -15,3 +15,7 @@ export interface GameMode {
   displayName: string;
   options: any[];
 }
+
+export interface HighScoreOptions {
+  speed: number;
+}

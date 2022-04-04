@@ -11,16 +11,18 @@
   import gameModeStore from "../store/gameModeStore";
   import { gameModes } from "../constants/gameModes";
 
-  export const getGameInstance = (mode: number) => {
-    switch (gameModes[mode].name) {
+  export const getGameInstance = (mode: number, option: number) => {
+    const gameMode = gameModes[mode];
+    const gameOption = gameMode.options[option];
+    switch (gameMode.name) {
       case "Alphabet":
-        return new Alphabet();
+        return new Alphabet(gameOption);
       case "HighScore":
-        return new HighScore();
+        return new HighScore(gameOption);
 
       default:
         console.log("Game mode doesn't exist");
-        return "Alphabet";
+        return new Alphabet(gameOption);
     }
   };
 
@@ -29,7 +31,7 @@
   gameModeStore.subscribe((gameMode) => {
     if (game) game.destroy();
 
-    game = getGameInstance(gameMode.mode);
+    game = getGameInstance(gameMode.mode, gameMode.option);
     game.reset();
   });
 

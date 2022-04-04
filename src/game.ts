@@ -11,7 +11,11 @@ class GameMode {
 
   public isStopped = true;
   // Settings for the specific game mode
-  protected settings = {};
+  protected readonly option: any;
+
+  constructor(option: any) {
+    this.option = option;
+  }
 
   protected updateTimeout = null;
   protected definitionTimeout = null;
@@ -170,7 +174,8 @@ export class HighScore extends GameMode {
 
     if (this.answerTimer < 1) return this.reset();
 
-    this.answerTimer -= 2;
+    console.log(this.option);
+    this.answerTimer -= this.option;
     gameStore.update((ui) => ({
       ...ui,
       gradientPercentage: Math.floor(
