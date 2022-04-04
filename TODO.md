@@ -1,9 +1,8 @@
 # Current:
 
-- [x] Skip word with penalty
 - [ ] Add settings
 - [ ] Add incorrect word response
-- [x] Flash definition after submit
+- [x] Add mode changer
 
 # Bugs/Back burner:
 
@@ -11,12 +10,15 @@
 - [ ] Add ui state type
 - [ ] Player can start typing before ui timer is reset
 - [ ] Timer slows down on first wrong submit
+- [ ] Fix tween
 - [ ] Grid vertical spacing tailwind
+- push up
+- [ ] Get rid of scroll on mobile brave
 
 # Planned:
 
 - [ ] Add hint when hovering over icons
-- [ ] Add skip and reset shortcuts
+- [x] Add skip and reset shortcuts
 - [ ] Add tutorial
 - [ ] Add darkmode and light mode
 - [ ] Add incorrect word response

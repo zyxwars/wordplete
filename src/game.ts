@@ -1,8 +1,8 @@
 import axios from "axios";
-import { time_ranges_to_array } from "svelte/internal";
 import { writable } from "svelte/store";
-import type * as T from "../types";
-import { words, bigrams, trigrams } from "../words";
+import type * as T from "./types";
+import { words, bigrams, trigrams } from "./words";
+import gameStore, { resetGameStore } from "./store/gameStore";
 
 class GameMode {
   protected filteredBigrams = bigrams.filter((bigram) => bigram[1] > 1000);
@@ -10,16 +10,6 @@ class GameMode {
   protected ngrams = [...this.filteredBigrams, ...this.filteredTrigrams];
 
   public isStopped = true;
-  protected baseState = {
-    currentNgram: null,
-    currentWord: "",
-    usedLetters: new Set(),
-    usedWords: [],
-    score: 0,
-    gradientPercentage: 100,
-    wordMeanings: null,
-  };
-  public ui: any = writable(this.baseState);
   // Settings for the specific game mode
   protected settings = {};
 
@@ -30,11 +20,17 @@ class GameMode {
     return this.ngrams[Math.floor(Math.random() * this.ngrams.length)][0];
   }
 
+  destroy() {
+    clearTimeout(this.updateTimeout);
+    clearTimeout(this.definitionTimeout);
+  }
+
   reset() {
-    this.ui.set({
-      ...this.baseState,
+    resetGameStore();
+    gameStore.update((ui) => ({
+      ...ui,
       currentNgram: this.pickNewNgram(),
-    });
+    }));
     this.isStopped = true;
     clearTimeout(this.updateTimeout);
   }
@@ -57,7 +53,7 @@ class GameMode {
   skipNgram() {
     if (this.isStopped) return;
 
-    this.ui.update((ui) => {
+    gameStore.update((ui) => {
       return { ...ui, currentNgram: this.pickNewNgram() };
     });
   }
@@ -70,8 +66,10 @@ class GameMode {
     axios
       .get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
       .then((res) => {
-        console.log(res.data[0].meanings);
-        this.ui.update((ui) => ({ ...ui, wordMeanings: res.data[0].meanings }));
+        gameStore.update((ui) => ({
+          ...ui,
+          wordMeanings: res.data[0].meanings,
+        }));
       });
   }
 
@@ -79,9 +77,7 @@ class GameMode {
     let newState = null;
     let oldState = null;
 
-    this.ui.update((ui) => {
-      console.log(ui);
-
+    gameStore.update((ui) => {
       oldState = ui;
       const currentWord = ui.currentWord.toLowerCase();
 
@@ -123,7 +119,7 @@ export class Alphabet extends GameMode {
   update(): void {
     super.update();
 
-    this.ui.update((ui) => ({
+    gameStore.update((ui) => ({
       ...ui,
       score: Math.floor((new Date().getTime() - this.roundStartTime) / 1000),
     }));
@@ -132,8 +128,7 @@ export class Alphabet extends GameMode {
   skipNgram() {
     if (this.isStopped) return;
 
-    this.ui.update((ui) => {
-      console.log("change currentWord to none");
+    gameStore.update((ui) => {
       this.roundStartTime = this.roundStartTime - 5000;
       return {
         ...ui,
@@ -148,14 +143,12 @@ export class Alphabet extends GameMode {
     this.roundStartTime = new Date().getTime();
   }
 
-  onSubmit(newState, _) {
-    console.log(this.checkWinningCondition(newState.usedLetters));
-  }
+  onSubmit(newState, _) {}
 }
 
 export class AlphabetLeastWords extends GameMode {
   onSubmit(newState, _): void {
-    this.ui.update((ui) => ({
+    gameStore.update((ui) => ({
       ...ui,
       score: ui.score + 1,
     }));
@@ -178,7 +171,7 @@ export class HighScore extends GameMode {
     if (this.answerTimer < 1) return this.reset();
 
     this.answerTimer -= 2;
-    this.ui.update((ui) => ({
+    gameStore.update((ui) => ({
       ...ui,
       gradientPercentage: Math.floor(
         (this.answerTimer / this.answerTime) * 100
@@ -191,6 +184,6 @@ export class HighScore extends GameMode {
     const score = oldState.currentWord.length * 2;
 
     this.answerTimer = Math.min(score + this.answerTimer, this.answerTime);
-    this.ui.update((ui) => ({ ...ui, score: ui.score + score }));
+    gameStore.update((ui) => ({ ...ui, score: ui.score + score }));
   }
 }

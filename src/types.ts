@@ -9,3 +9,9 @@ export interface Ui {
   gradientPercentage: number;
   wordMeanings: any;
 }
+
+export interface GameMode {
+  name: string;
+  displayName: string;
+  options: any[];
+}
