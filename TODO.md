@@ -1,8 +1,8 @@
 # Current:
 
-- [x] Add settings
-- [ ] Add incorrect word response
-- [x] Add mode changer
+- [x] Add incorrect word response
+- [ ] Replay animation on second wrong submit, https://developer.mozilla.org/en-US/docs/Web/API/Element/getAnimations
+- [ ] Use larger word list, but increase the common threshold from 1000
 
 # Bugs/Back burner:
 
@@ -13,22 +13,15 @@
 - [ ] Fix tween
 - [ ] Grid vertical spacing tailwind
 - push up
-- [ ] Get rid of scroll on mobile brave
+- [ ] Get rid of scroll on mobile Brave
 
 # Planned:
 
+- [ ] Use larger word list, but increase the common threshold from 1000
 - [ ] Add multiple options
 - [ ] Add hint when hovering over icons
-- [x] Add skip and reset shortcuts
 - [ ] Add tutorial
 - [ ] Add darkmode and light mode
-- [ ] Add incorrect word response
+- [x] Add incorrect word response
 - [ ] Add correct word response
-- [x] Modes
-  - High score
-  - Use whole alphabet
-    - timer
-    - least amount of words
-- [ ] Highlight bigram in word
-- [x] Show word definitions, when submitted
-- [ ] Use larger word list, but increase the common threshold from 1000
+- [ ] Highlight bigram in word, https://stackoverflow.com/questions/17341670/change-color-of-one-character-in-a-text-box-html-css

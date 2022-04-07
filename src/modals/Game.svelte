@@ -77,7 +77,9 @@
       {$gameStore.currentNgram}
     </div>
     <input
-      class="row-start-2 tall:row-start-4 col-start-2 place-self-center  w-11/12  sm:w-80 h-12  px-4  text-lg  text-white bg-zinc-800 border-1 border-violet-500 outline-none"
+      class={`${
+        $gameStore.isCorrectSubmit ? "bg-zinc-800" : "bg-red-500 fail-animation"
+      } row-start-2 tall:row-start-4 col-start-2 place-self-center  w-11/12  sm:w-80 h-12  px-4  text-lg  text-white  border-1 border-violet-500 outline-none`}
       spellcheck="false"
       on:change={() => {
         // This is a pretty ugly hack, but it works for now
@@ -106,3 +108,39 @@
     </div>
   </main>
 </div>
+
+<style>
+  @keyframes pos-x-wiggle {
+    0% {
+      transform: translateX(0px);
+    }
+    20% {
+      transform: translateX(10px);
+    }
+    40% {
+      transform: translateX(-10px);
+    }
+    60% {
+      transform: translateX(5px);
+    }
+    80% {
+      transform: translateX(-5px);
+    }
+    90% {
+      transform: translateX(1px);
+    }
+    95% {
+      transform: translateX(-1px);
+    }
+    100% {
+      transform: translateX(0px);
+    }
+  }
+
+  .fail-animation {
+    animation-duration: 1s;
+    animation-fill-mode: none;
+    animation-name: pos-x-wiggle;
+    animation-play-state: running;
+  }
+</style>

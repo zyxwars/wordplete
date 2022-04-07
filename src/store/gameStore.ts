@@ -8,6 +8,7 @@ const defaultState = {
   score: 0,
   gradientPercentage: 100,
   wordMeanings: null,
+  isCorrectSubmit: true,
 };
 
 const gameStore = writable(defaultState);

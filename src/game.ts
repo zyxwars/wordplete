@@ -90,7 +90,7 @@ class GameMode {
         !words.includes(currentWord) ||
         ui.usedWords.includes(currentWord)
       ) {
-        return ui;
+        return { ...ui, isCorrectSubmit: false };
       }
 
       this.getMeanings(ui.currentWord);
@@ -101,6 +101,7 @@ class GameMode {
         currentWord: "",
         usedLetters: new Set([...ui.usedLetters, ...currentWord]),
         usedWords: [currentWord, ...ui.usedWords],
+        isCorrectSubmit: true,
       };
 
       return newState;

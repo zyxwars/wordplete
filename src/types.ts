@@ -8,6 +8,7 @@ export interface Ui {
   // Can be static or used for timer by changing the value
   gradientPercentage: number;
   wordMeanings: any;
+  isCorrectSubmit: boolean;
 }
 
 export interface GameMode {
