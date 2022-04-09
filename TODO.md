@@ -1,7 +1,5 @@
 # Current:
 
-- [x] Add incorrect word response
-- [x] Replay animation on second wrong submit, https://developer.mozilla.org/en-US/docs/Web/API/Element/getAnimations
 - [ ] Use larger word list, but increase the common threshold from 1000
 
 # Bugs/Back burner:
@@ -23,5 +21,4 @@
 - [ ] Add tutorial
 - [ ] Add darkmode and light mode
 - [x] Add incorrect word response
-- [ ] Add correct word response
 - [ ] Highlight bigram in word, https://stackoverflow.com/questions/17341670/change-color-of-one-character-in-a-text-box-html-css
