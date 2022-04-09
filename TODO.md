@@ -1,7 +1,7 @@
 # Current:
 
 - [x] Add incorrect word response
-- [ ] Replay animation on second wrong submit, https://developer.mozilla.org/en-US/docs/Web/API/Element/getAnimations
+- [x] Replay animation on second wrong submit, https://developer.mozilla.org/en-US/docs/Web/API/Element/getAnimations
 - [ ] Use larger word list, but increase the common threshold from 1000
 
 # Bugs/Back burner:

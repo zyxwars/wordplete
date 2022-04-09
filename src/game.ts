@@ -2,12 +2,14 @@ import axios from "axios";
 import { writable } from "svelte/store";
 import type * as T from "./types";
 import { words, bigrams, trigrams } from "./words";
-import gameStore, { resetGameStore } from "./store/gameStore";
+import gameStore, { resetGameStore, test } from "./store/gameStore";
 
 class GameMode {
   protected filteredBigrams = bigrams.filter((bigram) => bigram[1] > 1000);
   protected filteredTrigrams = trigrams.filter((trigram) => trigram[1] > 1000);
   protected ngrams = [...this.filteredBigrams, ...this.filteredTrigrams];
+
+  protected animateWrongSubmit;
 
   public isStopped = true;
   // Settings for the specific game mode
@@ -90,6 +92,7 @@ class GameMode {
         !words.includes(currentWord) ||
         ui.usedWords.includes(currentWord)
       ) {
+        this.animateWrongSubmit();
         return { ...ui, isCorrectSubmit: false };
       }
 

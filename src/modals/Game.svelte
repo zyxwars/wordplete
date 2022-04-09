@@ -10,6 +10,7 @@
   import gameStore from "../store/gameStore";
   import gameModeStore from "../store/gameModeStore";
   import { gameModes } from "../constants/gameModes";
+  import { onMount } from "svelte";
 
   export const getGameInstance = (mode: number, option: number) => {
     const gameMode = gameModes[mode];
@@ -26,13 +27,43 @@
     }
   };
 
+  let inputEl: HTMLInputElement;
+
   let game = null;
+
+  const animateIncorrect = (el) =>
+    el.animate(
+      [
+        // keyframes
+        { transform: "translateX(0px)" },
+        { transform: "translateX(10px)" },
+        { transform: "translateX(-10px)" },
+        { transform: "translateX(5px)" },
+        { transform: "translateX(-5px)" },
+        { transform: "translateX(1px)" },
+        { transform: "translateX(-1px)" },
+        { transform: "translateX(0px)" },
+      ],
+      {
+        // timing options
+        duration: 1000,
+        iterations: 1,
+      }
+    );
+
+  onMount(() => {
+    //TODO: pass this to every instance on gamemode change
+    game.animateWrongSubmit = () => animateIncorrect(inputEl);
+  });
 
   gameModeStore.subscribe((gameMode) => {
     if (game) game.destroy();
 
     game = getGameInstance(gameMode.mode, gameMode.option);
     game.reset();
+
+    if (!inputEl) return;
+    game.animateWrongSubmit = () => animateIncorrect(inputEl);
   });
 
   // let tweenedGradient = tweened(100, { duration: 1000 });
@@ -77,8 +108,9 @@
       {$gameStore.currentNgram}
     </div>
     <input
+      bind:this={inputEl}
       class={`${
-        $gameStore.isCorrectSubmit ? "bg-zinc-800" : "bg-red-500 fail-animation"
+        $gameStore.isCorrectSubmit ? "bg-zinc-800" : "bg-red-500"
       } row-start-2 tall:row-start-4 col-start-2 place-self-center  w-11/12  sm:w-80 h-12  px-4  text-lg  text-white  border-1 border-violet-500 outline-none`}
       spellcheck="false"
       on:change={() => {
@@ -108,39 +140,3 @@
     </div>
   </main>
 </div>
-
-<style>
-  @keyframes pos-x-wiggle {
-    0% {
-      transform: translateX(0px);
-    }
-    20% {
-      transform: translateX(10px);
-    }
-    40% {
-      transform: translateX(-10px);
-    }
-    60% {
-      transform: translateX(5px);
-    }
-    80% {
-      transform: translateX(-5px);
-    }
-    90% {
-      transform: translateX(1px);
-    }
-    95% {
-      transform: translateX(-1px);
-    }
-    100% {
-      transform: translateX(0px);
-    }
-  }
-
-  .fail-animation {
-    animation-duration: 1s;
-    animation-fill-mode: none;
-    animation-name: pos-x-wiggle;
-    animation-play-state: running;
-  }
-</style>
