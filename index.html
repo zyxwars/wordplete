@@ -20,8 +20,17 @@
       rel="stylesheet"
     />
 
+    <link rel="manifest" href="./manifest.json" />
+
     <script defer src="./build/bundle.js"></script>
   </head>
 
-  <body></body>
+  <body>
+    <noscript>This won't work without javascript Chief.</noscript>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./sw.js");
+      }
+    </script>
+  </body>
 </html>
