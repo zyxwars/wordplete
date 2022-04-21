@@ -1,0 +1,12 @@
+{
+  "name": "Wordplete",
+  "short_name": "Wordplete",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "256x256"
+    }
+  ]
+}

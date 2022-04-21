@@ -2,7 +2,7 @@ import axios from "axios";
 import { writable } from "svelte/store";
 import type * as T from "./types";
 import { words, bigrams, trigrams } from "./words";
-import gameStore, { resetGameStore, test } from "./store/gameStore";
+import gameStore, { resetGameStore } from "./store/gameStore";
 
 class GameMode {
   protected filteredBigrams = bigrams.filter((bigram) => bigram[1] > 1000);
