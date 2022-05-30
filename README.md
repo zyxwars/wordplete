@@ -4,6 +4,8 @@
 
 <img src="./example1.png" width=100%/>
 
+<img src="./example2.png" width=100%/>
+
 Helpful resources:<br />
 http://app.aspell.net/create<br />
 https://dictionaryapi.dev/
